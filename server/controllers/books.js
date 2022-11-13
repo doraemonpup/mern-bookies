@@ -4,8 +4,22 @@ import Book from '../models/book.js';
 
 const router = express.Router();
 
+const getBooks = async (req, res) => {
+  try {
+    const books = await Book.find();
+    res.status(200).json(books);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
 const addBook = async (req, res) => {
-  console.log(req.body);
+  const books = await Book.find();
+  if (books.some(book => book.title === req.body.title)) {
+    res.status(409).json({ message: 'Item already existed' });
+    return;
+  }
+
   const { title, description, author, rating, numberOfPage, tags } = req.body;
   const newBook = new Book({
     title,
@@ -24,5 +38,5 @@ const addBook = async (req, res) => {
   }
 };
 
-export { addBook };
+export { getBooks, addBook };
 export default router;
