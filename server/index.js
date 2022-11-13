@@ -1,16 +1,17 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const mongoose = require('mongoose');
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import mongoose from 'mongoose';
+
+import bookRouter from './routers/books.js';
 
 const app = express();
 
+app.use(bodyParser.json({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-app.get('/', (req, res) => {
-  res.send('Hello, Node.js');
-});
+app.use('/books', bookRouter);
 
 const DB_URL = 'mongodb://localhost:27017/bookies';
 const PORT = process.env.PORT || 4000;
@@ -23,3 +24,5 @@ mongoose
     );
   })
   .catch(error => console.log(`${error} did not connect`));
+
+// mongoose.set('useFindAndModify', false);

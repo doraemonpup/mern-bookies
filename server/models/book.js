@@ -1,10 +1,9 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const bookSchema = mongoose.Schema({
   title: String,
   description: String,
   author: String,
-  language: String,
   rating: Number,
   numberOfPage: Number,
   tags: [String],
