@@ -1,5 +1,5 @@
 import express from 'express';
-
+import mongoose from 'mongoose';
 import Book from '../models/book.js';
 
 const router = express.Router();
@@ -38,5 +38,15 @@ const addBook = async (req, res) => {
   }
 };
 
-export { getBooks, addBook };
+const deleteBook = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send(`Book with id: ${id} doesn't exist`);
+
+  await Book.findByIdAndDelete(id);
+  res.status(200).json({ message: 'Book deleted successfully' });
+};
+
+export { getBooks, addBook, deleteBook };
 export default router;
