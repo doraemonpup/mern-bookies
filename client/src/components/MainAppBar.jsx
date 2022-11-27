@@ -40,7 +40,7 @@ const MainAppBar = () => {
           Bookies
         </Typography>
         {pages.map(page => (
-          <Button sx={buttonStyle} href={page.link}>
+          <Button key={page.title} sx={buttonStyle} href={page.link}>
             {page.title}
           </Button>
         ))}
