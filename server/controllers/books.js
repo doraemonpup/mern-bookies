@@ -20,7 +20,8 @@ const addBook = async (req, res) => {
     return;
   }
 
-  const { title, description, author, rating, numberOfPage, tags } = req.body;
+  const { title, description, author, rating, numberOfPage, tags, imageUrl } =
+    req.body;
   const newBook = new Book({
     title,
     description,
@@ -28,6 +29,7 @@ const addBook = async (req, res) => {
     rating,
     numberOfPage,
     tags,
+    imageUrl,
   });
 
   try {
