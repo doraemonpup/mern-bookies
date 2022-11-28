@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { fetchData } from '../helper';
+import Grid from '@mui/material/Grid';
+import BookCard from './BookCard';
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
@@ -14,19 +16,23 @@ const BookList = () => {
   }, []);
 
   return (
-    <>
+    <Grid container columns={16}>
       {books.map(book => {
+        const bookData = {
+          title: book.title,
+          author: book.author,
+          imageUrl: book.imageUrl,
+          description: book.description,
+          rating: book.rating,
+        };
+
         return (
-          <div key={book._id}>
-            <h2>{book.title}</h2>
-            <p>Athor: {book.author}</p>
-            <p>Description: {book.description}</p>
-            <p>Rating: {book.rating}</p>
-            <br />
-          </div>
+          <Grid key={book.title} item sm={16} md={8} lg={4}>
+            <BookCard data={bookData} />
+          </Grid>
         );
       })}
-    </>
+    </Grid>
   );
 };
 
