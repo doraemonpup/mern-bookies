@@ -4,6 +4,7 @@ import Book from '../models/book.js';
 
 const router = express.Router();
 
+// test
 const getBooks = async (req, res) => {
   try {
     const books = await Book.find();
