@@ -5,7 +5,7 @@ import { fetchData, deleteData } from '../helper';
 import { baseBoxStyle } from '../constants';
 import BookList from '../components/books/BookList';
 
-const Dashboard = () => {
+const Home = () => {
   const [books, setBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -53,4 +53,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Home;

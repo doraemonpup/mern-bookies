@@ -1,5 +1,5 @@
 export const pages = [
-  { title: 'Dashboard', link: '/' },
+  { title: 'Home', link: '/' },
   { title: 'New Book', link: '/new-book' },
   { title: 'My Favorites', link: '/favorites' },
   { title: 'About', link: '/about' },

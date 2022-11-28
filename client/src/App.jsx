@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainAppBar from './components/MainAppBar';
-import Dashboard from './pages/Dashboard';
+import Home from './pages/Home';
 import NewBook from './pages/NewBook';
 import Favorites from './pages/Favorites';
 import About from './pages/About';
@@ -11,7 +11,7 @@ const App = () => {
       <MainAppBar />
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Dashboard />} exact />
+          <Route path='/' element={<Home />} exact />
           <Route path='/new-book' element={<NewBook />} />
           <Route path='/favorites' element={<Favorites />} />
           <Route path='/about' element={<About />} />
