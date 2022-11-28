@@ -14,7 +14,7 @@ const BookCard = ({
   handleDelete,
 }) => {
   return (
-    <Card sx={{ minWidth: 300, maxWidth: 450, mx: 3, my: 4 }}>
+    <Card sx={{ maxWidth: 400, mx: 3, my: 4 }}>
       <CardHeader title={title} subheader={`by ${author}`} />
       <CardMedia component='img' height='300' alt={title} image={imageUrl} />
       <CardContent>

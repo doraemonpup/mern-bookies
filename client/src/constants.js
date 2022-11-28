@@ -4,3 +4,5 @@ export const pages = [
   { title: 'My Favorites', link: '/favorites' },
   { title: 'About', link: '/about' },
 ];
+
+export const baseBoxStyle = { my: 4, mx: 'auto', width: '90%' };

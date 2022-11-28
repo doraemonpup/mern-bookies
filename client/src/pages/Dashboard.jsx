@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { fetchData, deleteData } from '../helper';
+import { baseBoxStyle } from '../constants';
 import BookList from '../components/books/BookList';
 
 const Dashboard = () => {
   const [books, setBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const boxStyle = { my: 4, mx: 'auto', width: '90%' };
 
   useEffect(() => {
     setIsLoading(true);
@@ -40,12 +40,14 @@ const Dashboard = () => {
   };
 
   if (isLoading) {
-    return <Box sx={boxStyle}>Loading ...</Box>;
+    return <Box sx={baseBoxStyle}>Loading ...</Box>;
   }
 
   return (
-    <Box sx={boxStyle}>
-      <Typography variant='h3'>All Books</Typography>
+    <Box sx={baseBoxStyle}>
+      <Typography variant='h3' align='center'>
+        All Books
+      </Typography>
       <BookList books={books} handleDelete={deleteBook} />
     </Box>
   );
