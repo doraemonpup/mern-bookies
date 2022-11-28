@@ -45,7 +45,7 @@ const Home = () => {
 
   return (
     <Box sx={baseBoxStyle}>
-      <Typography variant='h3' align='center'>
+      <Typography gutterBottom variant='h3' align='center'>
         All Books
       </Typography>
       <BookList books={books} handleDelete={deleteBook} />
