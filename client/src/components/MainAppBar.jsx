@@ -4,17 +4,11 @@ import IconButton from '@mui/material/IconButton';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import { pages } from '../constants';
 
 const MainAppBar = () => {
-  const pages = [
-    { title: 'Dashboard', link: '/' },
-    { title: 'New Book', link: '/new-book' },
-    { title: 'About', link: '/about' },
-  ];
-  const buttonStyle = { my: 2, color: 'white', display: 'block' };
-
   return (
-    <AppBar position='static' sx={{ minWidth: '610px' }}>
+    <AppBar position='static' sx={{ minWidth: '600px' }}>
       <Toolbar disableGutters>
         <IconButton size='large' color='inherit' aria-label='icon' href='/'>
           <MenuBookIcon />
@@ -40,7 +34,11 @@ const MainAppBar = () => {
           Bookies
         </Typography>
         {pages.map(page => (
-          <Button key={page.title} sx={buttonStyle} href={page.link}>
+          <Button
+            key={page.title}
+            href={page.link}
+            sx={{ my: 2, color: 'white', display: 'block' }}
+          >
             {page.title}
           </Button>
         ))}
