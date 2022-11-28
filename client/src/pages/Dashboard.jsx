@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { fetchData, deleteData } from '../helper';
-import BookList from '../components/BookList';
+import BookList from '../components/books/BookList';
 
 const Dashboard = () => {
   const [books, setBooks] = useState([]);
