@@ -15,6 +15,10 @@ app.use(cors());
 
 app.use('/books', bookRouter);
 
+if (!process.env.DB_URI) {
+  throw new Error('Please add your MongoDB URI to .env');
+}
+
 const DB_URI = process.env.DB_URI;
 const PORT = process.env.APP_PORT || 4000;
 const options = { useNewUrlParser: true, useUnifiedTopology: true };
