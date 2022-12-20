@@ -1,3 +1,5 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
@@ -13,16 +15,15 @@ app.use(cors());
 
 app.use('/books', bookRouter);
 
-const DB_URL = 'mongodb://localhost:27017/bookies';
-const PORT = process.env.PORT || 4000;
+const DB_URI = process.env.DB_URI;
+const PORT = process.env.APP_PORT || 4000;
+const options = { useNewUrlParser: true, useUnifiedTopology: true };
 
 mongoose
-  .connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(DB_URI, options)
   .then(() => {
     app.listen(PORT, () =>
       console.log(`Server running on: http://localhost:${PORT}`)
     );
   })
   .catch(error => console.log(`${error} did not connect`));
-
-// mongoose.set('useFindAndModify', false);
