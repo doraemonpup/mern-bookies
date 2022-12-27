@@ -5,4 +5,4 @@ export const pages = [
   { title: 'About', link: '/about' },
 ];
 
-export const baseBoxStyle = { my: 4, mx: 'auto', width: '90%' };
+export const baseBoxStyle = { my: 4, mx: 'auto', width: '80%' };
