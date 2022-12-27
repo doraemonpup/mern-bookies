@@ -4,12 +4,19 @@ const bookSchema = mongoose.Schema({
   title: String,
   description: String,
   author: String,
-  rating: Number,
-  numberOfPage: Number,
+  rating: {
+    type: Number,
+    min: 1,
+  },
+  numberOfPage: {
+    type: Number,
+    min: 1,
+  },
   tags: [String],
   createdAt: {
     type: Date,
-    default: new Date(),
+    immutable: true,
+    default: () => new Date(),
   },
   likeCount: {
     type: Number,
