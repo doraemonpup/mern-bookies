@@ -64,9 +64,34 @@ const deleteBook = async (req, res) => {
     return res.status(404).send(`Book with id: ${id} doesn't exist`);
   }
 
-  await Book.findByIdAndDelete(id);
-  res.status(200).json({ message: 'Book deleted successfully' });
+  try {
+    const book = await Book.findOneAndDelete({ _id: id });
+    res.status(200).json({ message: 'Book deleted successfully' });
+  } catch (error) {
+    res.status(404).send(`Book with id: ${id} doesn't exist`);
+  }
 };
 
-export { getBooks, getBook, addBook, deleteBook };
+// update a book
+const updateBook = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).send(`Book with id: ${id} doesn't exist`);
+  }
+
+  try {
+    const book = await Book.findOneAndUpdate(
+      { _id: id },
+      {
+        ...req.body,
+      }
+    );
+    res.status(200).json({ message: 'Book updated successfully' });
+  } catch (error) {
+    res.status(404).send(`Book with id: ${id} doesn't exist`);
+  }
+};
+
+export { getBooks, getBook, addBook, deleteBook, updateBook };
 export default router;
