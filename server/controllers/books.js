@@ -4,6 +4,7 @@ import Book from '../models/book.js';
 
 const router = express.Router();
 
+// get all books
 const getBooks = async (req, res) => {
   try {
     const books = await Book.find();
@@ -13,6 +14,7 @@ const getBooks = async (req, res) => {
   }
 };
 
+// add a new book
 const addBook = async (req, res) => {
   const books = await Book.find();
   if (books.some(book => book.title === req.body.title)) {
@@ -20,14 +22,13 @@ const addBook = async (req, res) => {
     return;
   }
 
-  const { title, description, author, rating, numberOfPage, imageUrl } =
-    req.body;
+  const { title, description, author, rating, pages, imageUrl } = req.body;
   const newBook = new Book({
     title,
     description,
     author,
     rating,
-    numberOfPage,
+    pages,
     imageUrl,
   });
 
@@ -39,6 +40,7 @@ const addBook = async (req, res) => {
   }
 };
 
+// delete a book
 const deleteBook = async (req, res) => {
   const { id } = req.params;
 

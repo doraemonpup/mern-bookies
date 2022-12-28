@@ -11,7 +11,7 @@ const NewBookForm = props => {
   const authorInputRef = useRef();
   const descriptionInputRef = useRef();
   const imageUrlInputRef = useRef();
-  const numberOfPageInputRef = useRef();
+  const pagesInputRef = useRef();
   const ratingInputRef = useRef();
 
   const handleSubmit = e => {
@@ -21,7 +21,7 @@ const NewBookForm = props => {
     const enteredAuthor = authorInputRef.current.value;
     const enteredDescription = descriptionInputRef.current.value;
     const enteredImageUrl = imageUrlInputRef.current.value;
-    const enteredNumberOfPage = numberOfPageInputRef.current.value;
+    const enteredPages = pagesInputRef.current.value;
     const enteredRating = ratingInputRef.current.value;
 
     const newBookData = {
@@ -29,7 +29,7 @@ const NewBookForm = props => {
       author: enteredAuthor,
       description: enteredDescription,
       imageUrl: enteredImageUrl,
-      numberOfPage: parseInt(enteredNumberOfPage),
+      pages: parseInt(enteredPages),
       rating: parseInt(enteredRating),
     };
 
@@ -93,7 +93,7 @@ const NewBookForm = props => {
                 variant='outlined'
                 fullWidth
                 required
-                inputRef={numberOfPageInputRef}
+                inputRef={pagesInputRef}
               />
             </Grid>
             <Grid xs={12} sm={6} item>
