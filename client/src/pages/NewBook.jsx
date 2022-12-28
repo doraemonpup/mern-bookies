@@ -3,8 +3,11 @@ import Typography from '@mui/material/Typography';
 import NewBookForm from '../components/books/NewBookForm';
 import { addData } from '../helper';
 import { baseBoxStyle } from '../constants';
+import { useNavigate } from 'react-router-dom';
 
 const NewBook = () => {
+  const navigate = useNavigate();
+
   const handleAddBook = async bookData => {
     const res = await addData('http://localhost:4000/books', bookData);
 
@@ -14,6 +17,7 @@ const NewBook = () => {
     }
 
     console.log('Successfully added a new book!');
+    navigate('/', { replace: true });
   };
 
   return (
