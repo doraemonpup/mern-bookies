@@ -4,9 +4,10 @@ import Typography from '@mui/material/Typography';
 import { fetchData, deleteData } from '../helper';
 import { baseBoxStyle } from '../constants';
 import BookList from '../components/books/BookList';
+import { useBooksContext } from '../hooks/useBooksContext';
 
 const Home = () => {
-  const [books, setBooks] = useState([]);
+  const { books, dispatch } = useBooksContext();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -20,7 +21,7 @@ const Home = () => {
       }
 
       setIsLoading(false);
-      setBooks(res.data); // axios specific xxx.data
+      dispatch({ type: 'SET_BOOKS', payload: res.data }); // axios specific xxx.data
     };
 
     getAllBooks('http://localhost:4000/books');
