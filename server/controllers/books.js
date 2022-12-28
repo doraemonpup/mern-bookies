@@ -14,6 +14,22 @@ const getBooks = async (req, res) => {
   }
 };
 
+// get a single book
+const getBook = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ message: 'No such book' });
+  }
+
+  try {
+    const book = await Book.findById(id);
+    res.status(200).json(book);
+  } catch (error) {
+    res.status(404).json({ message: 'No such book' });
+  }
+};
+
 // add a new book
 const addBook = async (req, res) => {
   const books = await Book.find();
@@ -44,12 +60,13 @@ const addBook = async (req, res) => {
 const deleteBook = async (req, res) => {
   const { id } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(id))
+  if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).send(`Book with id: ${id} doesn't exist`);
+  }
 
   await Book.findByIdAndDelete(id);
   res.status(200).json({ message: 'Book deleted successfully' });
 };
 
-export { getBooks, addBook, deleteBook };
+export { getBooks, getBook, addBook, deleteBook };
 export default router;
