@@ -7,7 +7,7 @@ const router = express.Router();
 // get all books
 const getBooks = async (req, res) => {
   try {
-    const books = await Book.find();
+    const books = await Book.find().sort({ createdAt: -1 });
     res.status(200).json(books);
   } catch (error) {
     res.status(404).json({ message: error.message });
