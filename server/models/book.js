@@ -12,15 +12,10 @@ const bookSchema = mongoose.Schema({
     type: Number,
     min: 1,
   },
-  tags: [String],
   createdAt: {
     type: Date,
     immutable: true,
     default: () => new Date(),
-  },
-  likeCount: {
-    type: Number,
-    default: 0,
   },
   imageUrl: String,
 });
