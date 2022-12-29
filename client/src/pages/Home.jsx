@@ -25,7 +25,7 @@ const Home = () => {
     };
 
     getAllBooks('http://localhost:4000/books');
-  }, []);
+  }, [dispatch]);
 
   const deleteBook = async e => {
     const res = await deleteData(
