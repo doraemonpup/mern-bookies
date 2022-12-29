@@ -37,6 +37,7 @@ const Home = () => {
       return;
     }
 
+    dispatch({ type: 'DELETE_BOOK', payload: res.data });
     console.log('Deleted successfully');
   };
 

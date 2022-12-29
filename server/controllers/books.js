@@ -66,7 +66,7 @@ const deleteBook = async (req, res) => {
 
   try {
     const book = await Book.findOneAndDelete({ _id: id });
-    res.status(200).json({ message: 'Book deleted successfully' });
+    res.status(200).json(book);
   } catch (error) {
     res.status(404).send(`Book with id: ${id} doesn't exist`);
   }
@@ -87,7 +87,7 @@ const updateBook = async (req, res) => {
         ...req.body,
       }
     );
-    res.status(200).json({ message: 'Book updated successfully' });
+    res.status(200).json(book);
   } catch (error) {
     res.status(404).send(`Book with id: ${id} doesn't exist`);
   }
