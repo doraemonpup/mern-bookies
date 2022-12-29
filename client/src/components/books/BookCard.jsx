@@ -18,7 +18,7 @@ const BookCard = ({
       <CardHeader title={title} subheader={`by ${author}`} />
       <CardMedia component='img' height='500' alt={title} image={imageUrl} />
       <CardContent>
-        <Typography variant='body1' color='text.secondary'>
+        <Typography variant='body1' color='text.secondary' align='justify'>
           {description}
         </Typography>
       </CardContent>
