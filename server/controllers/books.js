@@ -2,8 +2,6 @@ import express from 'express';
 import mongoose from 'mongoose';
 import Book from '../models/book.js';
 
-const router = express.Router();
-
 // get all books
 const getBooks = async (req, res) => {
   try {
@@ -94,4 +92,3 @@ const updateBook = async (req, res) => {
 };
 
 export { getBooks, getBook, addBook, deleteBook, updateBook };
-export default router;
