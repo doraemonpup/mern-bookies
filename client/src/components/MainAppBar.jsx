@@ -36,7 +36,7 @@ const MainAppBar = () => {
         {pages.map(page => (
           <Button
             key={page.title}
-            href={page.link}
+            href={page.path}
             sx={{ my: 2, color: 'white', display: 'block' }}
           >
             {page.title}

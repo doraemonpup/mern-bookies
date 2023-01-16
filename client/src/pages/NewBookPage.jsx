@@ -5,7 +5,7 @@ import { addData } from '../helper';
 import { baseBoxStyle } from '../constants';
 import { useNavigate } from 'react-router-dom';
 
-const NewBook = () => {
+const NewBookPage = () => {
   const navigate = useNavigate();
 
   const handleAddBook = async bookData => {
@@ -30,4 +30,4 @@ const NewBook = () => {
   );
 };
 
-export default NewBook;
+export default NewBookPage;

@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainAppBar from './components/MainAppBar';
-import Home from './pages/Home';
-import NewBook from './pages/NewBook';
-import Favorites from './pages/Favorites';
-import About from './pages/About';
+import HomePage from './pages/HomePage';
+import NewBookPage from './pages/NewBookPage';
+import FavoritesPage from './pages/FavoritesPage';
+import AboutPage from './pages/AboutPage';
 
 const App = () => {
   return (
@@ -11,10 +11,10 @@ const App = () => {
       <MainAppBar />
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Home />} exact />
-          <Route path='/new-book' element={<NewBook />} />
-          <Route path='/favorites' element={<Favorites />} />
-          <Route path='/about' element={<About />} />
+          <Route path='/' element={<HomePage />} exact />
+          <Route path='/new-book' element={<NewBookPage />} />
+          <Route path='/favorites' element={<FavoritesPage />} />
+          <Route path='/about' element={<AboutPage />} />
         </Routes>
       </BrowserRouter>
     </>

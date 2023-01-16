@@ -17,20 +17,13 @@ const NewBookForm = props => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    const enteredTitle = titleInputRef.current.value;
-    const enteredAuthor = authorInputRef.current.value;
-    const enteredDescription = descriptionInputRef.current.value;
-    const enteredImageUrl = imageUrlInputRef.current.value;
-    const enteredPages = pagesInputRef.current.value;
-    const enteredRating = ratingInputRef.current.value;
-
     const newBookData = {
-      title: enteredTitle,
-      author: enteredAuthor,
-      description: enteredDescription,
-      imageUrl: enteredImageUrl,
-      pages: parseInt(enteredPages),
-      rating: parseInt(enteredRating),
+      title: titleInputRef.current.value,
+      author: authorInputRef.current.value,
+      description: descriptionInputRef.current.value,
+      imageUrl: imageUrlInputRef.current.value,
+      pages: parseInt(pagesInputRef.current.value),
+      rating: parseInt(ratingInputRef.current.value),
     };
 
     props.onAddBook(newBookData);

@@ -6,7 +6,7 @@ import { baseBoxStyle } from '../constants';
 import BookList from '../components/books/BookList';
 import { useBooksContext } from '../hooks/useBooksContext';
 
-const Home = () => {
+const HomePage = () => {
   const { books, dispatch } = useBooksContext();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -55,4 +55,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;

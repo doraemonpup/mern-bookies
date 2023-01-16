@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { baseBoxStyle } from '../constants';
 
-const About = () => {
+const AboutPage = () => {
   return (
     <Box sx={baseBoxStyle}>
       <Typography gutterBottom variant='h3' align='center'>
@@ -54,4 +54,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default AboutPage;
