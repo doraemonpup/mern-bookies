@@ -1,9 +1,9 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import MainAppBar from './components/MainAppBar';
-import HomePage from './pages/HomePage';
-import NewBookPage from './pages/NewBookPage';
-import FavoritesPage from './pages/FavoritesPage';
-import AboutPage from './pages/AboutPage';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import MainAppBar from './components/MainAppBar'
+import HomePage from './pages/HomePage'
+import NewBookPage from './pages/NewBookPage'
+import FavoritesPage from './pages/FavoritesPage'
+import AboutPage from './pages/AboutPage'
 
 const App = () => {
   return (
@@ -18,7 +18,7 @@ const App = () => {
         </Routes>
       </BrowserRouter>
     </>
-  );
-};
+  )
+}
 
-export default App;
+export default App

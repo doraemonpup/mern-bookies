@@ -1,8 +1,8 @@
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import { baseBoxStyle } from '../constants';
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import { baseBoxStyle } from '../constants'
 
 const AboutPage = () => {
   return (
@@ -51,7 +51,7 @@ const AboutPage = () => {
         </CardContent>
       </Card>
     </Box>
-  );
-};
+  )
+}
 
-export default AboutPage;
+export default AboutPage

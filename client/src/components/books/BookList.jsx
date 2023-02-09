@@ -1,5 +1,5 @@
-import Grid from '@mui/material/Grid';
-import BookCard from './BookCard';
+import Grid from '@mui/material/Grid'
+import BookCard from './BookCard'
 
 const BookList = ({ books, handleDelete }) => {
   return (
@@ -13,16 +13,16 @@ const BookList = ({ books, handleDelete }) => {
           imageUrl: book.imageUrl,
           description: book.description,
           rating: book.rating,
-        };
+        }
 
         return (
           <Grid item sm={16} md={8} xl={4} key={book._id}>
             <BookCard data={bookData} handleDelete={handleDelete} />
           </Grid>
-        );
+        )
       })}
     </Grid>
-  );
-};
+  )
+}
 
-export default BookList;
+export default BookList

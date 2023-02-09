@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
 const bookSchema = mongoose.Schema(
   {
@@ -20,8 +20,8 @@ const bookSchema = mongoose.Schema(
     imageUrl: String,
   },
   { timestamps: true }
-);
+)
 
-const Book = mongoose.model('Book', bookSchema);
+const Book = mongoose.model('Book', bookSchema)
 
-export default Book;
+export default Book

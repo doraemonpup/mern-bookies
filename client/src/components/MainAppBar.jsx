@@ -1,10 +1,10 @@
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import { pages } from '../constants';
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import IconButton from '@mui/material/IconButton'
+import MenuBookIcon from '@mui/icons-material/MenuBook'
+import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
+import { pages } from '../constants'
 
 const MainAppBar = () => {
   return (
@@ -44,7 +44,7 @@ const MainAppBar = () => {
         ))}
       </Toolbar>
     </AppBar>
-  );
-};
+  )
+}
 
-export default MainAppBar;
+export default MainAppBar

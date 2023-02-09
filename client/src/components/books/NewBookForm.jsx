@@ -1,21 +1,21 @@
-import { useRef } from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import { useRef } from 'react'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
 
 const NewBookForm = props => {
-  const titleInputRef = useRef();
-  const authorInputRef = useRef();
-  const descriptionInputRef = useRef();
-  const imageUrlInputRef = useRef();
-  const pagesInputRef = useRef();
-  const ratingInputRef = useRef();
+  const titleInputRef = useRef()
+  const authorInputRef = useRef()
+  const descriptionInputRef = useRef()
+  const imageUrlInputRef = useRef()
+  const pagesInputRef = useRef()
+  const ratingInputRef = useRef()
 
   const handleSubmit = e => {
-    e.preventDefault();
+    e.preventDefault()
 
     const newBookData = {
       title: titleInputRef.current.value,
@@ -24,10 +24,10 @@ const NewBookForm = props => {
       imageUrl: imageUrlInputRef.current.value,
       pages: parseInt(pagesInputRef.current.value),
       rating: parseInt(ratingInputRef.current.value),
-    };
+    }
 
-    props.onAddBook(newBookData);
-  };
+    props.onAddBook(newBookData)
+  }
 
   return (
     <Card sx={{ maxWidth: 450, mx: 'auto', my: 0 }}>
@@ -114,7 +114,7 @@ const NewBookForm = props => {
         </form>
       </CardContent>
     </Card>
-  );
-};
+  )
+}
 
-export default NewBookForm;
+export default NewBookForm
