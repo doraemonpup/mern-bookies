@@ -22,7 +22,7 @@ const BookCard = ({
     <Card
       sx={{
         maxWidth: 345,
-        mx: 'auto',
+        mx: 4,
         borderRadius: 2,
         transition: 'all 0.3s ease-in-out',
         '&:hover': {
@@ -57,13 +57,27 @@ const BookCard = ({
             p: 1,
             borderRadius: '0 8px 0 8px',
             bgcolor: 'rgba(0, 0, 0, 0.6)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 0.5,
           }}
         >
+          <Typography
+            variant='body2'
+            sx={{
+              color: 'white',
+              fontSize: '0.9rem',
+              fontWeight: 'bold',
+            }}
+          >
+            {rating}/10
+          </Typography>
           <Rating
-            value={rating}
+            value={rating / 2}
             readOnly
             precision={0.5}
-            sx={{ color: 'warning.light' }}
+            size='small'
+            sx={{ color: 'warning.light', ml: 0.5 }}
           />
         </Box>
         <CardHeader
