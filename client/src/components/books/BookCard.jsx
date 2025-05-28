@@ -23,7 +23,6 @@ const BookCard = ({
       sx={{
         maxWidth: 345,
         mx: 'auto',
-        my: 3,
         borderRadius: 2,
         transition: 'all 0.3s ease-in-out',
         '&:hover': {
