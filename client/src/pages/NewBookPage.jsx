@@ -23,7 +23,7 @@ const NewBookPage = () => {
   return (
     <Box sx={baseBoxStyle}>
       <Typography gutterBottom variant='h3' align='center'>
-        Add New Book
+        Add a New Book
       </Typography>
       <NewBookForm onAddBook={handleAddBook}></NewBookForm>
     </Box>
