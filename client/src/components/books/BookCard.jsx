@@ -21,8 +21,10 @@ const BookCard = ({
   return (
     <Card
       sx={{
-        maxWidth: 345,
-        mx: 4,
+        width: '100%',
+        maxWidth: 350,
+        height: '100%',
+        maxHeight: 600,
         borderRadius: 2,
         transition: 'all 0.3s ease-in-out',
         '&:hover': {
@@ -31,8 +33,8 @@ const BookCard = ({
         },
         display: 'flex',
         flexDirection: 'column',
-        height: '100%',
         bgcolor: 'background.paper',
+        mx: 'auto',
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -40,13 +42,17 @@ const BookCard = ({
       <Box sx={{ position: 'relative' }}>
         <CardMedia
           component='img'
-          height='400'
+          height='320'
           alt={title}
           image={imageUrl}
           sx={{
             objectFit: 'contain',
             transition: 'all 0.3s ease-in-out',
             filter: isHovered ? 'brightness(0.85)' : 'brightness(1)',
+            borderRadius: '8px 8px 0 0',
+            height: 320,
+            bgcolor: '#f8f9fa',
+            p: 2,
           }}
         />
         <Box
