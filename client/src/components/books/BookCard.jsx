@@ -10,6 +10,9 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { Rating } from '@mui/material'
 import { useState } from 'react'
+import { Button } from '@mui/material'
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 
 const BookCard = ({
   data: { id, title, author, imageUrl, description, rating },
@@ -17,6 +20,7 @@ const BookCard = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false)
   const [isFavorite, setIsFavorite] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(false)
 
   return (
     <Card
@@ -114,7 +118,15 @@ const BookCard = ({
           }
           sx={{ pb: 1 }}
         />
-        <CardContent sx={{ flexGrow: 1, pt: 0 }}>
+        <CardContent
+          sx={{
+            flexGrow: 1,
+            pt: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+          }}
+        >
           <Typography
             variant='body2'
             color='text.secondary'
@@ -122,19 +134,51 @@ const BookCard = ({
               display: '-webkit-box',
               overflow: 'hidden',
               WebkitBoxOrient: 'vertical',
-              WebkitLineClamp: 3,
+              WebkitLineClamp: isExpanded ? 'unset' : 3,
               textAlign: 'justify',
               lineHeight: 1.5,
+              mb: isExpanded ? 2 : 0,
+              transition: 'all 0.3s ease-in-out',
             }}
           >
             {description}
           </Typography>
+          <Button
+            onClick={() => setIsExpanded(!isExpanded)}
+            endIcon={
+              isExpanded ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />
+            }
+            sx={{
+              textTransform: 'none',
+              color: 'primary.main',
+              p: 0,
+              minWidth: 'unset',
+              display: 'flex',
+              alignItems: 'center',
+              mt: 1,
+              alignSelf: 'flex-start',
+              '&:hover': {
+                background: 'none',
+                color: 'primary.dark',
+              },
+            }}
+          >
+            {isExpanded ? 'Show less' : 'Show more'}
+          </Button>
         </CardContent>
       </Box>
 
       <CardActions
         disableSpacing
-        sx={{ borderTop: 1, borderColor: 'divider', px: 2, py: 1 }}
+        sx={{
+          borderTop: 1,
+          borderColor: 'divider',
+          px: 2,
+          py: 1,
+          height: 56,
+          minHeight: 56,
+          mt: 'auto',
+        }}
       >
         <IconButton
           aria-label='add to favorites'
