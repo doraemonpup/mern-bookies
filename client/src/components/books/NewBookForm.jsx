@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Grid'
@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
+import Alert from '@mui/material/Alert'
 
 const NewBookForm = props => {
   const titleInputRef = useRef()
@@ -14,20 +15,44 @@ const NewBookForm = props => {
   const imageUrlInputRef = useRef()
   const pagesInputRef = useRef()
   const ratingInputRef = useRef()
+  const [error, setError] = useState('')
+  const [descLength, setDescLength] = useState(0)
 
   const handleSubmit = e => {
     e.preventDefault()
+    setError('')
+
+    const description = descriptionInputRef.current.value
+    if (description.length > 1000) {
+      setError('Description must be 1000 characters or less')
+      return
+    }
 
     const newBookData = {
       title: titleInputRef.current.value,
       author: authorInputRef.current.value,
-      description: descriptionInputRef.current.value,
+      description: description,
       imageUrl: imageUrlInputRef.current.value,
       pages: parseInt(pagesInputRef.current.value),
       rating: parseInt(ratingInputRef.current.value),
     }
 
-    props.onAddBook(newBookData)
+    props.onAddBook(newBookData).catch(err => {
+      if (err.response?.status === 409) {
+        setError('A book with this title already exists')
+      } else {
+        setError('Something went wrong. Please try again.')
+      }
+    })
+  }
+
+  const handleDescriptionChange = e => {
+    setDescLength(e.target.value.length)
+    if (e.target.value.length > 1000) {
+      setError('Description must be 1000 characters or less')
+    } else {
+      setError('')
+    }
   }
 
   return (
@@ -44,6 +69,11 @@ const NewBookForm = props => {
         >
           Fill up the form to add a new book.
         </Typography>
+        {error && (
+          <Alert severity='error' sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
         <form onSubmit={handleSubmit}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
             <TextField
@@ -66,13 +96,18 @@ const NewBookForm = props => {
             />
             <TextField
               label='Description'
-              placeholder='Enter book description'
+              placeholder='Enter book description (max 1000 characters)'
               variant='outlined'
               multiline
               rows={4}
               fullWidth
               required
               inputRef={descriptionInputRef}
+              onChange={handleDescriptionChange}
+              error={descLength > 1000}
+              helperText={`${descLength}/1000 characters${
+                descLength > 1000 ? ' (exceeds limit)' : ''
+              }`}
               sx={{ '& .MuiInputBase-root': { borderRadius: 1.5 } }}
             />
             <TextField
@@ -93,6 +128,7 @@ const NewBookForm = props => {
                 fullWidth
                 required
                 type='number'
+                inputProps={{ min: 1 }}
                 inputRef={pagesInputRef}
                 sx={{ '& .MuiInputBase-root': { borderRadius: 1.5 } }}
               />
@@ -103,11 +139,7 @@ const NewBookForm = props => {
                 fullWidth
                 required
                 type='number'
-                slotProps={{
-                  input: {
-                    inputProps: { min: 0, max: 10 },
-                  },
-                }}
+                inputProps={{ min: 0, max: 10 }}
                 inputRef={ratingInputRef}
                 sx={{ '& .MuiInputBase-root': { borderRadius: 1.5 } }}
               />

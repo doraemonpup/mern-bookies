@@ -5,7 +5,7 @@ const bookSchema = mongoose.Schema(
     title: String,
     description: {
       type: String,
-      maxLength: 250,
+      maxLength: 1000,
     },
     author: String,
     rating: {
