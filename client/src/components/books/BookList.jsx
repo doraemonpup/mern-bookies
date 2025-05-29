@@ -1,11 +1,11 @@
 import Grid from '@mui/material/Grid'
 import BookCard from './BookCard'
-import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
 
 const BookList = ({ books, handleDelete }) => {
   return (
-    <Box sx={{ width: '100%', py: 4 }}>
-      <Grid container spacing={4} columns={12} alignItems='stretch'>
+    <Container maxWidth='xl' sx={{ py: 4 }}>
+      <Grid container spacing={6} justifyContent='center'>
         {books.map(book => {
           // assembly data of a book in one object
           const bookData = {
@@ -22,16 +22,20 @@ const BookList = ({ books, handleDelete }) => {
               item
               xs={12}
               sm={6}
-              md={4}
+              lg={4}
+              xl={3}
               key={book._id}
-              sx={{ display: 'flex' }}
+              sx={{
+                display: 'flex',
+                maxWidth: '100%',
+              }}
             >
               <BookCard data={bookData} handleDelete={handleDelete} />
             </Grid>
           )
         })}
       </Grid>
-    </Box>
+    </Container>
   )
 }
 
