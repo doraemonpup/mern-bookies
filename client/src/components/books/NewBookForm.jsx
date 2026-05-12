@@ -1,35 +1,35 @@
-import { useRef, useState } from 'react'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import Typography from '@mui/material/Typography'
-import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
-import Box from '@mui/material/Box'
-import Alert from '@mui/material/Alert'
-import AutoStoriesIcon from '@mui/icons-material/AutoStories'
-import EditIcon from '@mui/icons-material/Edit'
+import { useRef, useState } from 'react';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Alert from '@mui/material/Alert';
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
+import EditIcon from '@mui/icons-material/Edit';
 
 const NewBookForm = ({ initialData, onSubmit }) => {
-  const isEdit = !!initialData
-  const titleInputRef = useRef()
-  const authorInputRef = useRef()
-  const descriptionInputRef = useRef()
-  const imageUrlInputRef = useRef()
-  const pagesInputRef = useRef()
-  const ratingInputRef = useRef()
-  const [error, setError] = useState('')
+  const isEdit = !!initialData;
+  const titleInputRef = useRef();
+  const authorInputRef = useRef();
+  const descriptionInputRef = useRef();
+  const imageUrlInputRef = useRef();
+  const pagesInputRef = useRef();
+  const ratingInputRef = useRef();
+  const [error, setError] = useState('');
   const [descLength, setDescLength] = useState(
-    initialData?.description?.length || 0
-  )
+    initialData?.description?.length || 0,
+  );
 
   const handleSubmit = e => {
-    e.preventDefault()
-    setError('')
+    e.preventDefault();
+    setError('');
 
-    const description = descriptionInputRef.current.value
+    const description = descriptionInputRef.current.value;
     if (description.length > 1000) {
-      setError('Description must be 1000 characters or less')
-      return
+      setError('Description must be 1000 characters or less');
+      return;
     }
 
     const bookData = {
@@ -39,25 +39,25 @@ const NewBookForm = ({ initialData, onSubmit }) => {
       imageUrl: imageUrlInputRef.current.value,
       pages: parseInt(pagesInputRef.current.value),
       rating: parseInt(ratingInputRef.current.value),
-    }
+    };
 
     onSubmit(bookData).catch(err => {
       if (err.response?.status === 409) {
-        setError('A book with this title already exists')
+        setError('A book with this title already exists');
       } else {
-        setError('Something went wrong. Please try again.')
+        setError('Something went wrong. Please try again.');
       }
-    })
-  }
+    });
+  };
 
   const handleDescriptionChange = e => {
-    setDescLength(e.target.value.length)
+    setDescLength(e.target.value.length);
     if (e.target.value.length > 1000) {
-      setError('Description must be 1000 characters or less')
+      setError('Description must be 1000 characters or less');
     } else {
-      setError('')
+      setError('');
     }
-  }
+  };
 
   return (
     <Card
@@ -65,7 +65,7 @@ const NewBookForm = ({ initialData, onSubmit }) => {
         maxWidth: 640,
         mx: 'auto',
         my: 4,
-        background: 'rgba(255, 255, 255, 0.65)',
+        background: 'rgba(255, 255, 255, 0.5)',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
         border: '1px solid rgba(255, 255, 255, 0.5)',
@@ -188,7 +188,7 @@ const NewBookForm = ({ initialData, onSubmit }) => {
         </form>
       </CardContent>
     </Card>
-  )
-}
+  );
+};
 
-export default NewBookForm
+export default NewBookForm;

@@ -9,7 +9,7 @@ import GroupsIcon from '@mui/icons-material/Groups'
 const SectionCard = ({ icon, title, children }) => (
   <Card
     sx={{
-      background: 'rgba(255, 255, 255, 0.65)',
+      background: 'rgba(255, 255, 255, 0.5)',
       backdropFilter: 'blur(20px)',
       WebkitBackdropFilter: 'blur(20px)',
       border: '1px solid rgba(255, 255, 255, 0.5)',

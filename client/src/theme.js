@@ -32,6 +32,22 @@ const theme = createTheme({
         },
       },
     },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          backgroundColor: 'transparent',
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          '&.Mui-focused': {
+            color: '#E8A870',
+          },
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {
