@@ -90,4 +90,22 @@ const deleteBook = async (req, res) => {
   }
 }
 
-export { getBooks, getBook, addBook, deleteBook, updateBook }
+// toggle favorite
+const toggleFavorite = async (req, res) => {
+  const { id } = req.params
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ message: 'No such book' })
+  }
+
+  try {
+    const book = await Book.findById(id)
+    book.favorite = !book.favorite
+    await book.save()
+    res.status(200).json(book)
+  } catch (error) {
+    res.status(404).json({ message: 'No such book' })
+  }
+}
+
+export { getBooks, getBook, addBook, deleteBook, updateBook, toggleFavorite }

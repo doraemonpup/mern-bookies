@@ -8,18 +8,16 @@ import AboutPage from './pages/AboutPage'
 
 const App = () => {
   return (
-    <>
+    <BrowserRouter>
       <MainAppBar />
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<HomePage />} exact />
-          <Route path='/new-book' element={<NewBookPage />} />
-          <Route path='/edit-book/:id' element={<EditBookPage />} />
-          <Route path='/favorites' element={<FavoritesPage />} />
-          <Route path='/about' element={<AboutPage />} />
-        </Routes>
-      </BrowserRouter>
-    </>
+      <Routes>
+        <Route path='/' element={<HomePage />} exact />
+        <Route path='/new-book' element={<NewBookPage />} />
+        <Route path='/edit-book/:id' element={<EditBookPage />} />
+        <Route path='/favorites' element={<FavoritesPage />} />
+        <Route path='/about' element={<AboutPage />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 

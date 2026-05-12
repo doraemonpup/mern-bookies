@@ -19,6 +19,7 @@ const BookList = ({ books, handleDelete }) => {
           imageUrl: book.imageUrl,
           description: book.description,
           rating: book.rating,
+          favorite: book.favorite,
         }
 
         return (

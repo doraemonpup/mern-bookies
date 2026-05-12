@@ -18,6 +18,10 @@ const bookSchema = mongoose.Schema(
       min: 1,
     },
     imageUrl: String,
+    favorite: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 )

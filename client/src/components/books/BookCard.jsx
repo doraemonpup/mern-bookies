@@ -19,13 +19,16 @@ import { Button } from '@mui/material'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 
+import { toggleFavorite as toggleFavApi } from '../../helpers/favorites'
+
 const BookCard = ({
-  data: { id, title, author, imageUrl, description, rating },
+  data: { id, title, author, imageUrl, description, rating, favorite },
   handleDelete,
+  onToggleFavorite,
 }) => {
   const navigate = useNavigate()
   const [isExpanded, setIsExpanded] = useState(false)
-  const [isFavorite, setIsFavorite] = useState(false)
+  const [isFavorite, setIsFavorite] = useState(favorite || false)
   const [showPreview, setShowPreview] = useState(false)
 
   return (
@@ -144,7 +147,11 @@ const BookCard = ({
       >
         <IconButton
           aria-label='add to favorites'
-          onClick={() => setIsFavorite(!isFavorite)}
+          onClick={async () => {
+            const updated = await toggleFavApi(id)
+            setIsFavorite(updated.favorite)
+            onToggleFavorite?.()
+          }}
           sx={{
             color: isFavorite ? 'secondary.main' : 'action.disabled',
             transition: 'all 0.2s ease-in-out',

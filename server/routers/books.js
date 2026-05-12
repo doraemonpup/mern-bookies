@@ -6,6 +6,7 @@ import {
   addBook,
   deleteBook,
   updateBook,
+  toggleFavorite,
 } from '../controllers/books.js'
 
 const router = express.Router()
@@ -15,5 +16,6 @@ router.get('/:id', getBook)
 router.post('/', addBook)
 router.delete('/:id', deleteBook)
 router.patch('/:id', updateBook)
+router.patch('/:id/favorite', toggleFavorite)
 
 export default router
