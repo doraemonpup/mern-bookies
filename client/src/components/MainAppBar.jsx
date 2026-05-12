@@ -13,7 +13,7 @@ const MainAppBar = () => {
 
   return (
     <AppBar
-      position='static'
+      position='sticky'
       sx={{
         background: 'rgba(255, 255, 255, 0.6)',
         backdropFilter: 'blur(20px)',
