@@ -14,3 +14,8 @@ export const deleteData = async url => {
   const res = axios.delete(url)
   return res
 }
+
+export const updateData = async (url, data) => {
+  const res = axios.patch(url, data)
+  return res
+}

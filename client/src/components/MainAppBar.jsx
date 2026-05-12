@@ -8,7 +8,7 @@ import { pages } from '../constants'
 
 const MainAppBar = () => {
   return (
-    <AppBar position='static' sx={{ minWidth: '600px' }}>
+    <AppBar position='static'>
       <Toolbar disableGutters>
         <IconButton size='large' color='inherit' aria-label='icon' href='/'>
           <MenuBookIcon />

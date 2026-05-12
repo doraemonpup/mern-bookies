@@ -1,14 +1,16 @@
 import { useRef, useState } from 'react'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import Alert from '@mui/material/Alert'
+import AutoStoriesIcon from '@mui/icons-material/AutoStories'
+import EditIcon from '@mui/icons-material/Edit'
 
-const NewBookForm = props => {
+const NewBookForm = ({ initialData, onSubmit }) => {
+  const isEdit = !!initialData
   const titleInputRef = useRef()
   const authorInputRef = useRef()
   const descriptionInputRef = useRef()
@@ -16,7 +18,9 @@ const NewBookForm = props => {
   const pagesInputRef = useRef()
   const ratingInputRef = useRef()
   const [error, setError] = useState('')
-  const [descLength, setDescLength] = useState(0)
+  const [descLength, setDescLength] = useState(
+    initialData?.description?.length || 0
+  )
 
   const handleSubmit = e => {
     e.preventDefault()
@@ -28,7 +32,7 @@ const NewBookForm = props => {
       return
     }
 
-    const newBookData = {
+    const bookData = {
       title: titleInputRef.current.value,
       author: authorInputRef.current.value,
       description: description,
@@ -37,7 +41,7 @@ const NewBookForm = props => {
       rating: parseInt(ratingInputRef.current.value),
     }
 
-    props.onAddBook(newBookData).catch(err => {
+    onSubmit(bookData).catch(err => {
       if (err.response?.status === 409) {
         setError('A book with this title already exists')
       } else {
@@ -57,18 +61,36 @@ const NewBookForm = props => {
 
   return (
     <Card
-      sx={{ maxWidth: 600, mx: 'auto', my: 4, boxShadow: 3, borderRadius: 2 }}
+      sx={{
+        maxWidth: 640,
+        mx: 'auto',
+        my: 4,
+        background: 'rgba(255, 255, 255, 0.65)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        border: '1px solid rgba(255, 255, 255, 0.5)',
+        borderRadius: 3,
+      }}
     >
-      <CardContent sx={{ p: 3 }}>
-        <Typography
-          variant='body1'
-          sx={{
-            mb: 3,
-            fontWeight: 600,
-          }}
-        >
-          Fill up the form to add a new book.
-        </Typography>
+      <CardContent sx={{ px: 4, py: 3.5 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 3 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              p: 1,
+              borderRadius: 2,
+              bgcolor: 'rgba(250, 200, 152, 0.2)',
+              color: 'primary.dark',
+            }}
+          >
+            {isEdit ? <EditIcon /> : <AutoStoriesIcon />}
+          </Box>
+          <Typography variant='body1' fontWeight={600}>
+            {isEdit
+              ? 'Update the book details below.'
+              : 'Fill up the form to add a new book.'}
+          </Typography>
+        </Box>
         {error && (
           <Alert severity='error' sx={{ mb: 2 }}>
             {error}
@@ -83,7 +105,7 @@ const NewBookForm = props => {
               fullWidth
               required
               inputRef={titleInputRef}
-              sx={{ '& .MuiInputBase-root': { borderRadius: 1.5 } }}
+              defaultValue={initialData?.title || ''}
             />
             <TextField
               label='Author'
@@ -92,7 +114,7 @@ const NewBookForm = props => {
               fullWidth
               required
               inputRef={authorInputRef}
-              sx={{ '& .MuiInputBase-root': { borderRadius: 1.5 } }}
+              defaultValue={initialData?.author || ''}
             />
             <TextField
               label='Description'
@@ -108,7 +130,7 @@ const NewBookForm = props => {
               helperText={`${descLength}/1000 characters${
                 descLength > 1000 ? ' (exceeds limit)' : ''
               }`}
-              sx={{ '& .MuiInputBase-root': { borderRadius: 1.5 } }}
+              defaultValue={initialData?.description || ''}
             />
             <TextField
               label='Image URL'
@@ -117,7 +139,7 @@ const NewBookForm = props => {
               fullWidth
               required
               inputRef={imageUrlInputRef}
-              sx={{ '& .MuiInputBase-root': { borderRadius: 1.5 } }}
+              defaultValue={initialData?.imageUrl || ''}
             />
 
             <Box sx={{ display: 'flex', gap: 2, width: '100%' }}>
@@ -130,7 +152,7 @@ const NewBookForm = props => {
                 type='number'
                 inputProps={{ min: 1 }}
                 inputRef={pagesInputRef}
-                sx={{ '& .MuiInputBase-root': { borderRadius: 1.5 } }}
+                defaultValue={initialData?.pages || ''}
               />
               <TextField
                 label='Rating'
@@ -141,7 +163,7 @@ const NewBookForm = props => {
                 type='number'
                 inputProps={{ min: 0, max: 10 }}
                 inputRef={ratingInputRef}
-                sx={{ '& .MuiInputBase-root': { borderRadius: 1.5 } }}
+                defaultValue={initialData?.rating || ''}
               />
             </Box>
 
@@ -151,18 +173,16 @@ const NewBookForm = props => {
               color='primary'
               fullWidth
               sx={{
-                mt: 2,
-                height: 50,
-                borderRadius: 1.5,
-                textTransform: 'none',
+                mt: 1,
+                height: 52,
                 fontSize: '1rem',
-                fontWeight: 500,
+                fontWeight: 600,
                 '&:hover': {
                   backgroundColor: 'primary.dark',
                 },
               }}
             >
-              Add Book
+              {isEdit ? 'Save Changes' : 'Add Book'}
             </Button>
           </Box>
         </form>
