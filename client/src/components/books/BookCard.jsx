@@ -49,151 +49,151 @@ const BookCard = ({
           },
         }}
       >
-      <Box
-        sx={{ position: 'relative', cursor: 'pointer' }}
-        onClick={() => setShowPreview(true)}
-      >
-        <CardMedia
-          component='img'
-          height={300}
-          image={imageUrl}
-          alt={title}
-          sx={{
-            objectFit: 'contain',
-            bgcolor: 'rgba(250, 200, 152, 0.08)',
-            p: 2,
-            transition: 'all 0.3s ease-in-out',
-          }}
-        />
-        <Chip
-          icon={<StarIcon sx={{ fontSize: 16 }} />}
-          label={`${rating}/10`}
-          size='small'
-          sx={{
-            position: 'absolute',
-            top: 12,
-            right: 12,
-            bgcolor: 'rgba(255, 255, 255, 0.85)',
-            backdropFilter: 'blur(8px)',
-            WebkitBackdropFilter: 'blur(8px)',
-            color: 'primary.dark',
-            fontWeight: 700,
-            fontSize: '0.8rem',
-            '& .MuiChip-icon': { color: 'primary.dark' },
-          }}
-        />
-      </Box>
-      <CardContent sx={{ px: 3, pt: 2.5, pb: 1 }}>
-        <Typography
-          variant='h5'
-          fontWeight={700}
-          sx={{ mb: 0.5, color: 'text.primary', lineHeight: 1.3 }}
+        <Box
+          sx={{ position: 'relative', cursor: 'pointer' }}
+          onClick={() => setShowPreview(true)}
         >
-          {title}
-        </Typography>
-        <Typography
-          variant='subtitle1'
-          color='text.secondary'
-          fontStyle='italic'
-          sx={{ mb: 1.5 }}
-        >
-          by {author}
-        </Typography>
-        <Rating
-          value={rating / 2}
-          readOnly
-          precision={0.5}
-          size='small'
-          sx={{ mb: 1.5 }}
-        />
-        <Typography
-          variant='body2'
-          color='text.secondary'
-          sx={{
-            lineHeight: 1.7,
-            display: '-webkit-box',
-            overflow: 'hidden',
-            WebkitBoxOrient: 'vertical',
-            WebkitLineClamp: isExpanded ? 'unset' : 4,
-            transition: 'all 0.3s ease-in-out',
-          }}
-        >
-          {description}
-        </Typography>
-        <Button
-          onClick={() => setIsExpanded(!isExpanded)}
-          endIcon={
-            isExpanded ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />
-          }
-          sx={{
-            textTransform: 'none',
-            color: 'primary.main',
-            p: 0,
-            minWidth: 'unset',
-            mt: 0.5,
-            '&:hover': { background: 'none', color: 'primary.dark' },
-          }}
-        >
-          {isExpanded ? 'Show less' : 'Show more'}
-        </Button>
-      </CardContent>
-      <CardActions
-        disableSpacing
-        sx={{
-          px: 3,
-          py: 1.5,
-          borderTop: '1px solid rgba(255, 255, 255, 0.5)',
-        }}
-      >
-        <IconButton
-          aria-label='add to favorites'
-          onClick={async () => {
-            const updated = await toggleFavApi(id)
-            setIsFavorite(updated.favorite)
-            onToggleFavorite?.()
-          }}
-          sx={{
-            color: isFavorite ? 'secondary.main' : 'action.disabled',
-            transition: 'all 0.2s ease-in-out',
-            '&:hover': {
-              color: 'secondary.main',
-              transform: 'scale(1.1)',
-            },
-          }}
-        >
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton
-          aria-label='edit'
-          onClick={() => navigate(`/edit-book/${id}`)}
-          sx={{
-            color: 'action.disabled',
-            transition: 'all 0.2s ease-in-out',
-            '&:hover': {
+          <CardMedia
+            component='img'
+            height={300}
+            image={imageUrl}
+            alt={title}
+            sx={{
+              objectFit: 'contain',
+              bgcolor: 'rgba(250, 200, 152, 0.08)',
+              p: 2,
+              transition: 'all 0.3s ease-in-out',
+            }}
+          />
+          <Chip
+            icon={<StarIcon sx={{ fontSize: 16 }} />}
+            label={`${rating}/10`}
+            size='small'
+            sx={{
+              position: 'absolute',
+              top: 12,
+              right: 12,
+              bgcolor: 'rgba(255, 255, 255, 0.85)',
+              backdropFilter: 'blur(8px)',
+              WebkitBackdropFilter: 'blur(8px)',
+              color: 'primary.dark',
+              fontWeight: 700,
+              fontSize: '0.8rem',
+              '& .MuiChip-icon': { color: 'primary.dark' },
+            }}
+          />
+        </Box>
+        <CardContent sx={{ px: 3, pt: 2.5, pb: 1 }}>
+          <Typography
+            variant='h5'
+            fontWeight={700}
+            sx={{ mb: 0.5, color: 'text.primary', lineHeight: 1.3 }}
+          >
+            {title}
+          </Typography>
+          <Typography
+            variant='subtitle1'
+            color='text.secondary'
+            fontStyle='italic'
+            sx={{ mb: 1.5 }}
+          >
+            by {author}
+          </Typography>
+          <Rating
+            value={rating / 2}
+            readOnly
+            precision={0.5}
+            size='small'
+            sx={{ mb: 1.5 }}
+          />
+          <Typography
+            variant='body2'
+            color='text.secondary'
+            sx={{
+              lineHeight: 1.7,
+              display: '-webkit-box',
+              overflow: 'hidden',
+              WebkitBoxOrient: 'vertical',
+              WebkitLineClamp: isExpanded ? 'unset' : 4,
+              transition: 'all 0.3s ease-in-out',
+            }}
+          >
+            {description}
+          </Typography>
+          <Button
+            onClick={() => setIsExpanded(!isExpanded)}
+            endIcon={
+              isExpanded ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />
+            }
+            sx={{
+              textTransform: 'none',
               color: 'primary.main',
-              transform: 'scale(1.1)',
-            },
-          }}
-        >
-          <EditIcon />
-        </IconButton>
-        <Box sx={{ flexGrow: 1 }} />
-        <IconButton
-          aria-label='delete'
-          onClick={() => handleDelete(id)}
+              p: 0,
+              minWidth: 'unset',
+              mt: 0.5,
+              '&:hover': { background: 'none', color: 'primary.dark' },
+            }}
+          >
+            {isExpanded ? 'Show less' : 'Show more'}
+          </Button>
+        </CardContent>
+        <CardActions
+          disableSpacing
           sx={{
-            color: 'action.disabled',
-            transition: 'all 0.2s ease-in-out',
-            '&:hover': {
-              color: 'error.main',
-              transform: 'scale(1.1)',
-            },
+            px: 3,
+            py: 1.5,
+            borderTop: '1px solid rgba(255, 255, 255, 0.5)',
           }}
         >
-          <DeleteIcon />
-        </IconButton>
-      </CardActions>
-    </Card>
+          <IconButton
+            aria-label='add to favorites'
+            onClick={async () => {
+              const updated = await toggleFavApi(id)
+              setIsFavorite(updated.favorite)
+              onToggleFavorite?.()
+            }}
+            sx={{
+              color: isFavorite ? 'secondary.main' : 'action.disabled',
+              transition: 'all 0.2s ease-in-out',
+              '&:hover': {
+                color: 'secondary.main',
+                transform: 'scale(1.1)',
+              },
+            }}
+          >
+            <FavoriteIcon />
+          </IconButton>
+          <Box sx={{ flexGrow: 1 }} />
+          <IconButton
+            aria-label='edit'
+            onClick={() => navigate(`/edit-book/${id}`)}
+            sx={{
+              color: 'action.disabled',
+              transition: 'all 0.2s ease-in-out',
+              '&:hover': {
+                color: 'primary.main',
+                transform: 'scale(1.1)',
+              },
+            }}
+          >
+            <EditIcon />
+          </IconButton>
+          <IconButton
+            aria-label='delete'
+            onClick={() => handleDelete(id)}
+            sx={{
+              color: 'action.disabled',
+              transition: 'all 0.2s ease-in-out',
+              '&:hover': {
+                color: 'error.main',
+                transform: 'scale(1.1)',
+              },
+            }}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </CardActions>
+      </Card>
       <Dialog
         open={showPreview}
         onClose={() => setShowPreview(false)}
