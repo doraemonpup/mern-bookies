@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import MainAppBar from './components/MainAppBar'
+import AppShell from './components/AppShell'
 import HomePage from './pages/HomePage'
 import NewBookPage from './pages/NewBookPage'
 import EditBookPage from './pages/EditBookPage'
@@ -9,13 +9,14 @@ import AboutPage from './pages/AboutPage'
 const App = () => {
   return (
     <BrowserRouter>
-      <MainAppBar />
       <Routes>
-        <Route path='/' element={<HomePage />} exact />
-        <Route path='/new-book' element={<NewBookPage />} />
-        <Route path='/edit-book/:id' element={<EditBookPage />} />
-        <Route path='/favorites' element={<FavoritesPage />} />
-        <Route path='/about' element={<AboutPage />} />
+        <Route element={<AppShell />}>
+          <Route path='/' element={<HomePage />} />
+          <Route path='/new-book' element={<NewBookPage />} />
+          <Route path='/edit-book/:id' element={<EditBookPage />} />
+          <Route path='/favorites' element={<FavoritesPage />} />
+          <Route path='/about' element={<AboutPage />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   )

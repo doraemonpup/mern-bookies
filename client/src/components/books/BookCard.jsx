@@ -2,255 +2,123 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-import CardActions from '@mui/material/CardActions'
-import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import Box from '@mui/material/Box'
-import Chip from '@mui/material/Chip'
-import Dialog from '@mui/material/Dialog'
-import FavoriteIcon from '@mui/icons-material/Favorite'
-import EditIcon from '@mui/icons-material/Edit'
-import DeleteIcon from '@mui/icons-material/Delete'
-import StarIcon from '@mui/icons-material/Star'
-import CloseIcon from '@mui/icons-material/Close'
-import { Rating } from '@mui/material'
-import { Button } from '@mui/material'
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
+import BookmarkButton from './BookmarkButton'
+import RatingBadge from './RatingBadge'
+import BookDetailDialog from './BookDetailDialog'
 
-import { toggleFavorite as toggleFavApi } from '../../helpers/favorites'
-
-const BookCard = ({
-  data: { id, title, author, imageUrl, description, rating, favorite },
-  handleDelete,
-  onToggleFavorite,
-}) => {
+const BookCard = ({ data, handleDelete, onToggleFavorite }) => {
   const navigate = useNavigate()
-  const [isExpanded, setIsExpanded] = useState(false)
-  const [isFavorite, setIsFavorite] = useState(favorite || false)
-  const [showPreview, setShowPreview] = useState(false)
+  const [showDetail, setShowDetail] = useState(false)
+  const { id, title, author, imageUrl, description, rating, favorite } = data
 
   return (
     <>
       <Card
         sx={{
-          width: '100%',
-          borderRadius: 3,
-          overflow: 'hidden',
-          background: 'rgba(255, 255, 255, 0.65)',
-          backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
-          border: '1px solid rgba(255, 255, 255, 0.5)',
-          transition: 'all 0.3s ease-in-out',
-          '&:hover': {
-            transform: 'translateY(-6px)',
-            boxShadow: '0 12px 40px rgba(250, 200, 152, 0.3)',
-          },
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%',
+          transition: 'box-shadow 0.2s ease',
+          '&:hover': { boxShadow: '0 8px 28px rgba(0, 0, 0, 0.12)' },
         }}
       >
         <Box
-          sx={{ position: 'relative', cursor: 'pointer' }}
-          onClick={() => setShowPreview(true)}
-        >
-          <CardMedia
-            component='img'
-            height={300}
-            image={imageUrl}
-            alt={title}
-            sx={{
-              objectFit: 'contain',
-              bgcolor: 'rgba(250, 200, 152, 0.08)',
-              p: 2,
-              transition: 'all 0.3s ease-in-out',
-            }}
-          />
-          <Chip
-            icon={<StarIcon sx={{ fontSize: 16 }} />}
-            label={`${rating}/10`}
-            size='small'
-            sx={{
-              position: 'absolute',
-              top: 12,
-              right: 12,
-              bgcolor: 'rgba(255, 255, 255, 0.85)',
-              backdropFilter: 'blur(8px)',
-              WebkitBackdropFilter: 'blur(8px)',
-              color: 'primary.dark',
-              fontWeight: 700,
-              fontSize: '0.8rem',
-              '& .MuiChip-icon': { color: 'primary.dark' },
-            }}
-          />
-        </Box>
-        <CardContent sx={{ px: 3, pt: 2.5, pb: 1 }}>
-          <Typography
-            variant='h5'
-            fontWeight={700}
-            sx={{ mb: 0.5, color: 'text.primary', lineHeight: 1.3 }}
-          >
-            {title}
-          </Typography>
-          <Typography
-            variant='subtitle1'
-            color='text.secondary'
-            fontStyle='italic'
-            sx={{ mb: 1.5 }}
-          >
-            by {author}
-          </Typography>
-          <Rating
-            value={rating / 2}
-            readOnly
-            precision={0.5}
-            size='small'
-            sx={{ mb: 1.5 }}
-          />
-          <Typography
-            variant='body2'
-            color='text.secondary'
-            sx={{
-              lineHeight: 1.7,
-              display: '-webkit-box',
-              overflow: 'hidden',
-              WebkitBoxOrient: 'vertical',
-              WebkitLineClamp: isExpanded ? 'unset' : 4,
-              transition: 'all 0.3s ease-in-out',
-            }}
-          >
-            {description}
-          </Typography>
-          <Button
-            onClick={() => setIsExpanded(!isExpanded)}
-            endIcon={
-              isExpanded ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />
-            }
-            sx={{
-              textTransform: 'none',
-              color: 'primary.main',
-              p: 0,
-              minWidth: 'unset',
-              mt: 0.5,
-              '&:hover': { background: 'none', color: 'primary.dark' },
-            }}
-          >
-            {isExpanded ? 'Show less' : 'Show more'}
-          </Button>
-        </CardContent>
-        <CardActions
-          disableSpacing
           sx={{
-            px: 3,
-            py: 1.5,
-            borderTop: '1px solid rgba(255, 255, 255, 0.5)',
-          }}
-        >
-          <IconButton
-            aria-label='add to favorites'
-            onClick={async () => {
-              const updated = await toggleFavApi(id)
-              setIsFavorite(updated.favorite)
-              onToggleFavorite?.()
-            }}
-            sx={{
-              color: isFavorite ? 'secondary.main' : 'action.disabled',
-              transition: 'all 0.2s ease-in-out',
-              '&:hover': {
-                color: 'secondary.main',
-                transform: 'scale(1.1)',
-              },
-            }}
-          >
-            <FavoriteIcon />
-          </IconButton>
-          <Box sx={{ flexGrow: 1 }} />
-          <IconButton
-            aria-label='edit'
-            onClick={() => navigate(`/edit-book/${id}`)}
-            sx={{
-              color: 'action.disabled',
-              transition: 'all 0.2s ease-in-out',
-              '&:hover': {
-                color: 'primary.main',
-                transform: 'scale(1.1)',
-              },
-            }}
-          >
-            <EditIcon />
-          </IconButton>
-          <IconButton
-            aria-label='delete'
-            onClick={() => handleDelete(id)}
-            sx={{
-              color: 'action.disabled',
-              transition: 'all 0.2s ease-in-out',
-              '&:hover': {
-                color: 'error.main',
-                transform: 'scale(1.1)',
-              },
-            }}
-          >
-            <DeleteIcon />
-          </IconButton>
-        </CardActions>
-      </Card>
-      <Dialog
-        open={showPreview}
-        onClose={() => setShowPreview(false)}
-        maxWidth='md'
-        PaperProps={{
-          sx: {
-            borderRadius: 3,
-            background: 'rgba(255, 255, 255, 0.5)',
-            backdropFilter: 'blur(24px)',
-            WebkitBackdropFilter: 'blur(24px)',
-            border: '1px solid rgba(255, 255, 255, 0.5)',
-            position: 'relative',
-            overflow: 'hidden',
-            maxWidth: 920,
-          },
-        }}
-      >
-        <IconButton
-          onClick={() => setShowPreview(false)}
-          sx={{
-            position: 'absolute',
-            top: 8,
-            right: 8,
-            zIndex: 1,
-            bgcolor: 'rgba(255, 255, 255, 0.7)',
-            backdropFilter: 'blur(8px)',
-            WebkitBackdropFilter: 'blur(8px)',
-            '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.9)' },
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-        <Box
-          sx={{
-            width: 880,
-            height: 660,
+            bgcolor: '#F5F5F7',
+            borderRadius: '18px 18px 0 0',
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center',
-            bgcolor: 'rgba(250, 200, 152, 0.06)',
             px: 4,
-            py: 6,
+            py: 4,
+            position: 'relative',
+            cursor: 'pointer',
           }}
+          onClick={() => setShowDetail(true)}
         >
           <Box
             component='img'
             src={imageUrl}
             alt={title}
             sx={{
-              width: '100%',
-              height: '100%',
+              height: 260,
+              maxWidth: '100%',
               objectFit: 'contain',
-              borderRadius: 2,
+              borderRadius: '8px',
+              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.12)',
             }}
           />
+          <RatingBadge rating={rating} />
         </Box>
-      </Dialog>
+
+        <CardContent sx={{ px: 2.5, pt: 2, pb: 0, flexGrow: 1 }}>
+          <Typography
+            variant='h5'
+            component='h3'
+            onClick={() => setShowDetail(true)}
+            sx={{ cursor: 'pointer', mb: 0.25 }}
+          >
+            {title}
+          </Typography>
+          <Typography variant='body2' color='text.secondary'>
+            by {author}
+          </Typography>
+          {description && (
+            <Typography
+              variant='body2'
+              color='text.secondary'
+              sx={{
+                mt: 1,
+                display: '-webkit-box',
+                overflow: 'hidden',
+                WebkitBoxOrient: 'vertical',
+                WebkitLineClamp: 2,
+              }}
+            >
+              {description}
+            </Typography>
+          )}
+        </CardContent>
+
+        <Box
+          sx={{
+            px: 1.5,
+            py: 0.75,
+            mt: 1.5,
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <BookmarkButton id={id} initial={favorite} onChange={() => onToggleFavorite?.()} />
+          <Box sx={{ flexGrow: 1 }} />
+          <IconButton
+            aria-label={`Edit ${title}`}
+            onClick={() => navigate(`/edit-book/${id}`)}
+            sx={{ color: 'text.disabled', '&:hover': { color: 'primary.main' } }}
+          >
+            <EditOutlinedIcon fontSize='small' />
+          </IconButton>
+          <IconButton
+            aria-label={`Delete ${title}`}
+            onClick={() => handleDelete(id)}
+            sx={{ color: 'text.disabled', '&:hover': { color: 'error.main' } }}
+          >
+            <DeleteOutlinedIcon fontSize='small' />
+          </IconButton>
+        </Box>
+      </Card>
+
+      <BookDetailDialog
+        open={showDetail}
+        onClose={() => setShowDetail(false)}
+        data={data}
+        handleDelete={handleDelete}
+        onToggleFavorite={onToggleFavorite}
+      />
     </>
   )
 }

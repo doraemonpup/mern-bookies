@@ -3,8 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import NewBookForm from '../components/books/NewBookForm'
+import PageHeader from '../components/PageHeader'
 import { fetchData, updateData } from '../helper'
-import EditIcon from '@mui/icons-material/Edit'
 
 const EditBookPage = () => {
   const { id } = useParams()
@@ -13,14 +13,24 @@ const EditBookPage = () => {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
+    let cancelled = false
+
     const getBook = async () => {
-      const res = await fetchData(`http://localhost:4000/books/${id}`)
-      if (res.status === 200) {
-        setBook(res.data)
+      setIsLoading(true)
+      try {
+        const res = await fetchData(`http://localhost:4000/books/${id}`)
+        if (!cancelled && res.status === 200) {
+          setBook(res.data)
+        }
+      } finally {
+        if (!cancelled) setIsLoading(false)
       }
-      setIsLoading(false)
     }
+
     getBook()
+    return () => {
+      cancelled = true
+    }
   }, [id])
 
   const handleUpdate = async bookData => {
@@ -39,7 +49,7 @@ const EditBookPage = () => {
 
   if (isLoading) {
     return (
-      <Box sx={{ width: '80%', maxWidth: 800, mx: 'auto', my: 6 }}>
+      <Box sx={{ maxWidth: 640, mx: 'auto', my: 6 }}>
         <Typography align='center' color='text.secondary'>
           Loading...
         </Typography>
@@ -49,7 +59,7 @@ const EditBookPage = () => {
 
   if (!book) {
     return (
-      <Box sx={{ width: '80%', maxWidth: 800, mx: 'auto', my: 6 }}>
+      <Box sx={{ maxWidth: 640, mx: 'auto', my: 6 }}>
         <Typography align='center' color='text.secondary'>
           Book not found.
         </Typography>
@@ -58,32 +68,11 @@ const EditBookPage = () => {
   }
 
   return (
-    <Box sx={{ width: '80%', maxWidth: 800, mx: 'auto', my: 6 }}>
-      <Box sx={{ textAlign: 'center', mb: 4 }}>
-        <Box
-          sx={{
-            display: 'inline-flex',
-            p: 1.5,
-            borderRadius: 3,
-            bgcolor: 'rgba(250, 200, 152, 0.2)',
-            color: 'primary.dark',
-            mb: 2,
-          }}
-        >
-          <EditIcon sx={{ fontSize: 40 }} />
-        </Box>
-        <Typography variant='h3' fontWeight={700} sx={{ mb: 1 }}>
-          Edit Book
-        </Typography>
-        <Typography
-          variant='body1'
-          color='text.secondary'
-          sx={{ fontSize: '1.1rem' }}
-        >
-          Update the details for "{book.title}".
-        </Typography>
-      </Box>
-
+    <Box>
+      <PageHeader
+        title='Edit book.'
+        subtitle={`Update the details for "${book.title}".`}
+      />
       <NewBookForm initialData={book} onSubmit={handleUpdate} />
     </Box>
   )

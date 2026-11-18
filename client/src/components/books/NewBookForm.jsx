@@ -1,22 +1,117 @@
 import { useRef, useState } from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
-import AutoStoriesIcon from '@mui/icons-material/AutoStories';
-import EditIcon from '@mui/icons-material/Edit';
+import Rating from '@mui/material/Rating';
+import AutoStoriesOutlinedIcon from '@mui/icons-material/AutoStoriesOutlined';
+
+// Borderless filled inputs: gray wells, rounded, blue focus ring.
+const formSx = {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 2.5,
+  '& .MuiFilledInput-root': {
+    bgcolor: '#F5F5F7',
+    borderRadius: '12px',
+    '&:before, &:after': { borderBottom: 'none' },
+    '&:hover': { bgcolor: '#EFEFF3' },
+    '&.Mui-focused': {
+      bgcolor: '#F5F5F7',
+      boxShadow: '0 0 0 2px #0071E3',
+    },
+  },
+  '& .MuiInputBase-input': { fontSize: '1.0625rem' },
+  '& .MuiFormLabel-root': {
+    fontSize: '0.9375rem',
+    color: 'text.secondary',
+    '&.Mui-focused': { color: 'primary.main' },
+  },
+};
+
+const PreviewPanel = ({ title, author, imageUrl, rating }) => {
+  const [imgFailed, setImgFailed] = useState(false);
+  const showCover = imageUrl && !imgFailed;
+
+  return (
+    <Box
+      sx={{
+        width: { xs: '100%', sm: 300 },
+        flexShrink: 0,
+        alignSelf: { xs: 'stretch', sm: 'flex-start' },
+        position: { sm: 'sticky' },
+        top: { sm: 80 },
+      }}
+    >
+      <Box
+        sx={{
+          bgcolor: '#F5F5F7',
+          borderRadius: '12px',
+          p: 3,
+          minHeight: 300,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        {showCover ? (
+          <Box
+            component='img'
+            src={imageUrl}
+            alt='Cover preview'
+            onError={() => setImgFailed(true)}
+            onLoad={() => setImgFailed(false)}
+            sx={{
+              height: { xs: 300, sm: 340 },
+              maxWidth: '100%',
+              objectFit: 'contain',
+              borderRadius: '8px',
+              boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
+            }}
+          />
+        ) : (
+          <Box sx={{ textAlign: 'center' }}>
+            <AutoStoriesOutlinedIcon sx={{ fontSize: 56, color: '#C0C4C8' }} />
+            <Typography variant='body2' color='text.secondary' sx={{ mt: 1 }}>
+              Cover preview
+            </Typography>
+          </Box>
+        )}
+      </Box>
+
+      <Box sx={{ px: 0.5, pt: 2, textAlign: { xs: 'center', sm: 'left' } }}>
+        <Typography sx={{ fontWeight: 600, fontSize: '1.15rem', letterSpacing: '-0.01em' }}>
+          {title || 'Untitled'}
+        </Typography>
+        <Typography variant='body2' color='text.secondary' sx={{ mt: 0.25 }}>
+          by {author || 'unknown author'}
+        </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25, mt: 1, justifyContent: { xs: 'center', sm: 'flex-start' } }}>
+          <Rating
+            value={rating}
+            readOnly
+            max={10}
+            precision={1}
+            size='small'
+          />
+          <Typography variant='body2' color='text.secondary' sx={{ fontWeight: 600 }}>
+            {rating} / 10
+          </Typography>
+        </Box>
+      </Box>
+    </Box>
+  );
+};
 
 const NewBookForm = ({ initialData, onSubmit }) => {
   const isEdit = !!initialData;
-  const titleInputRef = useRef();
-  const authorInputRef = useRef();
   const descriptionInputRef = useRef();
-  const imageUrlInputRef = useRef();
-  const pagesInputRef = useRef();
-  const ratingInputRef = useRef();
+  const [title, setTitle] = useState(initialData?.title || '');
+  const [author, setAuthor] = useState(initialData?.author || '');
+  const [imageUrl, setImageUrl] = useState(initialData?.imageUrl || '');
+  const [pages, setPages] = useState(initialData?.pages || '');
+  const [rating, setRating] = useState(initialData?.rating ?? 5);
   const [error, setError] = useState('');
   const [descLength, setDescLength] = useState(
     initialData?.description?.length || 0,
@@ -33,12 +128,12 @@ const NewBookForm = ({ initialData, onSubmit }) => {
     }
 
     const bookData = {
-      title: titleInputRef.current.value,
-      author: authorInputRef.current.value,
+      title: title,
+      author: author,
       description: description,
-      imageUrl: imageUrlInputRef.current.value,
-      pages: parseInt(pagesInputRef.current.value),
-      rating: parseInt(ratingInputRef.current.value),
+      imageUrl: imageUrl,
+      pages: parseInt(pages),
+      rating: rating,
     };
 
     onSubmit(bookData).catch(err => {
@@ -60,134 +155,145 @@ const NewBookForm = ({ initialData, onSubmit }) => {
   };
 
   return (
-    <Card
+    <Box
       sx={{
-        maxWidth: 640,
+        maxWidth: 980,
         mx: 'auto',
         my: 4,
-        background: 'rgba(255, 255, 255, 0.5)',
-        backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255, 255, 255, 0.5)',
-        borderRadius: 3,
+        display: 'flex',
+        flexDirection: { xs: 'column', sm: 'row' },
+        gap: { xs: 4, sm: 5 },
       }}
     >
-      <CardContent sx={{ px: 4, py: 3.5 }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 3 }}>
-          <Box
-            sx={{
-              display: 'flex',
-              p: 1,
-              borderRadius: 2,
-              bgcolor: 'rgba(250, 200, 152, 0.2)',
-              color: 'primary.dark',
-            }}
-          >
-            {isEdit ? <EditIcon /> : <AutoStoriesIcon />}
-          </Box>
-          <Typography variant='body1' fontWeight={600}>
-            {isEdit
-              ? 'Update the book details below.'
-              : 'Fill up the form to add a new book.'}
-          </Typography>
-        </Box>
+      <PreviewPanel title={title} author={author} imageUrl={imageUrl} rating={rating} />
+
+      <Box
+        component='form'
+        onSubmit={handleSubmit}
+        sx={{ ...formSx, flexGrow: 1, minWidth: 0 }}
+      >
         {error && (
-          <Alert severity='error' sx={{ mb: 2 }}>
+          <Alert severity='error' sx={{ mb: 1 }}>
             {error}
           </Alert>
         )}
-        <form onSubmit={handleSubmit}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
-            <TextField
-              label='Title'
-              placeholder='Enter book title'
-              variant='outlined'
-              fullWidth
-              required
-              inputRef={titleInputRef}
-              defaultValue={initialData?.title || ''}
-            />
-            <TextField
-              label='Author'
-              placeholder='Enter author name'
-              variant='outlined'
-              fullWidth
-              required
-              inputRef={authorInputRef}
-              defaultValue={initialData?.author || ''}
-            />
-            <TextField
-              label='Description'
-              placeholder='Enter book description (max 1000 characters)'
-              variant='outlined'
-              multiline
-              rows={4}
-              fullWidth
-              required
-              inputRef={descriptionInputRef}
-              onChange={handleDescriptionChange}
-              error={descLength > 1000}
-              helperText={`${descLength}/1000 characters${
-                descLength > 1000 ? ' (exceeds limit)' : ''
-              }`}
-              defaultValue={initialData?.description || ''}
-            />
-            <TextField
-              label='Image URL'
-              placeholder='Enter image URL'
-              variant='outlined'
-              fullWidth
-              required
-              inputRef={imageUrlInputRef}
-              defaultValue={initialData?.imageUrl || ''}
-            />
 
-            <Box sx={{ display: 'flex', gap: 2, width: '100%' }}>
-              <TextField
-                label='Number of pages'
-                placeholder='Enter number of pages'
-                variant='outlined'
-                fullWidth
-                required
-                type='number'
-                inputProps={{ min: 1 }}
-                inputRef={pagesInputRef}
-                defaultValue={initialData?.pages || ''}
-              />
-              <TextField
-                label='Rating'
-                placeholder='Rate between 0 - 10'
-                variant='outlined'
-                fullWidth
-                required
-                type='number'
-                inputProps={{ min: 0, max: 10 }}
-                inputRef={ratingInputRef}
-                defaultValue={initialData?.rating || ''}
-              />
-            </Box>
+        <TextField
+          label='Title'
+          placeholder='Enter book title'
+          variant='filled'
+          fullWidth
+          required
+          slotProps={{ input: { disableUnderline: true } }}
+          value={title}
+          onChange={e => setTitle(e.target.value)}
+        />
 
-            <Button
-              type='submit'
-              variant='contained'
-              color='primary'
-              fullWidth
-              sx={{
-                mt: 1,
-                height: 52,
-                fontSize: '1rem',
-                fontWeight: 600,
-                '&:hover': {
-                  backgroundColor: 'primary.dark',
-                },
-              }}
+        <Box sx={{ display: 'flex', gap: 2, flexDirection: { xs: 'column', sm: 'row' } }}>
+          <TextField
+            label='Author'
+            placeholder='Enter author name'
+            variant='filled'
+            fullWidth
+            required
+            slotProps={{ input: { disableUnderline: true } }}
+            value={author}
+            onChange={e => setAuthor(e.target.value)}
+          />
+          <TextField
+            label='Number of pages'
+            placeholder='Enter number of pages'
+            variant='filled'
+            fullWidth
+            required
+            type='number'
+            slotProps={{
+              input: { disableUnderline: true },
+              htmlInput: { min: 1 },
+            }}
+            value={pages}
+            onChange={e => setPages(e.target.value)}
+          />
+        </Box>
+
+        <TextField
+          label='Description'
+          placeholder='Enter book description (max 1000 characters)'
+          variant='filled'
+          multiline
+          rows={4}
+          fullWidth
+          required
+          inputRef={descriptionInputRef}
+          onChange={handleDescriptionChange}
+          error={descLength > 1000}
+          helperText={`${descLength}/1000 characters${
+            descLength > 1000 ? ' (exceeds limit)' : ''
+          }`}
+          slotProps={{ input: { disableUnderline: true } }}
+          defaultValue={initialData?.description || ''}
+        />
+
+        <TextField
+          label='Image URL'
+          placeholder='Paste a cover image URL'
+          variant='filled'
+          fullWidth
+          required
+          slotProps={{ input: { disableUnderline: true } }}
+          value={imageUrl}
+          onChange={e => setImageUrl(e.target.value)}
+        />
+
+        <Box
+          sx={{
+            bgcolor: '#F5F5F7',
+            borderRadius: '12px',
+            px: 2.5,
+            py: 2,
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'baseline',
+              mb: 0.75,
+            }}
+          >
+            <Typography variant='body2' color='text.secondary'>
+              Rating
+            </Typography>
+            <Typography
+              variant='body2'
+              sx={{ fontWeight: 600, color: 'primary.main' }}
             >
-              {isEdit ? 'Save Changes' : 'Add Book'}
-            </Button>
+              {rating} / 10
+            </Typography>
           </Box>
-        </form>
-      </CardContent>
-    </Card>
+          <Rating
+            value={rating}
+            onChange={(e, value) => {
+              if (value !== null) setRating(value)
+            }}
+            max={10}
+            precision={1}
+            size='large'
+            aria-label='Rating'
+          />
+        </Box>
+
+        <Button
+          type='submit'
+          variant='contained'
+          color='primary'
+          fullWidth
+          sx={{ mt: 1, height: 48, fontSize: '1rem' }}
+        >
+          {isEdit ? 'Save changes' : 'Add book'}
+        </Button>
+      </Box>
+    </Box>
   );
 };
 
