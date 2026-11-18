@@ -21,11 +21,9 @@ if (!process.env.DB_URI) {
 
 const DB_URI = process.env.DB_URI
 const PORT = process.env.APP_PORT || 4000
-const dbOptions = { useNewUrlParser: true, useUnifiedTopology: true }
-
 // connect to db
 mongoose
-  .connect(DB_URI, dbOptions)
+  .connect(DB_URI)
   .then(() => {
     // listening for requests
     app.listen(PORT, () =>
