@@ -2,7 +2,7 @@
 
 A personal library app built on the MERN stack — track the books you read, rate them from 1 to 10, and bookmark the keepers.
 
-![Bookies home page](./b1.png)
+![Bookies home page](./ss.png)
 
 ## Features
 
